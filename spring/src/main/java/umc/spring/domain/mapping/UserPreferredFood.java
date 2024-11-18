@@ -25,4 +25,17 @@ public class UserPreferredFood extends BaseEntity {
     @JoinColumn(name = "category_id")
     private FoodCategory foodCategory;
 
+    public void setUser(User user) {
+        if (this.user != null) {
+            this.user.getUserPreferredFoodList().remove(this);
+        }
+
+        this.user = user;
+        user.getUserPreferredFoodList().add(this);  // 이 부분에서 add()를 사용해야 합니다.
+    }
+
+    public void setFoodCategory(FoodCategory foodCategory) {
+        this.foodCategory = foodCategory;
+    }
+
 }

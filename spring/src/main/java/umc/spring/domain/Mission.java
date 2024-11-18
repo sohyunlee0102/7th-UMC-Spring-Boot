@@ -2,6 +2,9 @@ package umc.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import umc.spring.domain.base.BaseEntity;
 import umc.spring.domain.mapping.MissionAssigned;
 
 import java.time.LocalDate;
@@ -14,7 +17,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Mission {
+@DynamicUpdate
+@DynamicInsert
+public class Mission extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +40,12 @@ public class Mission {
 
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     private List<MissionAssigned> missionAssignedList = new ArrayList<>();
+
+    @PrePersist
+    public void setDefaultDueDate() {
+        if (this.dueDate == null) {
+            this.dueDate = LocalDate.now().plusDays(7);  // 오늘 날짜로부터 7일 후로 기본 설정
+        }
+    }
 
 }

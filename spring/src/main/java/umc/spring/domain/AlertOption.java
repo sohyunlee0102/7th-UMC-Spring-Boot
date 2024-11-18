@@ -24,7 +24,7 @@ public class AlertOption extends BaseEntity {
     private AlertOptionDtype dtype;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "us  er_id")
     private User user;
 
 }

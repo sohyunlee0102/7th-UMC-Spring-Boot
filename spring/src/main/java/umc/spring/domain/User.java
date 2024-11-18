@@ -3,6 +3,8 @@ package umc.spring.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.spring.domain.base.BaseEntity;
 import umc.spring.domain.enums.Gender;
 import umc.spring.domain.enums.SocialType;
@@ -20,6 +22,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@DynamicInsert
+@DynamicUpdate
 public class User extends BaseEntity {
 
     @Id
@@ -35,13 +39,16 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String address;
 
+    @Column(nullable = true, length = 100)
+    private String specAddress;
+
     @ColumnDefault("0")
     private Integer point;
 
     @Column(nullable = false, length = 30)
     private String nickname;
 
-    @Column(nullable = false, length = 50)
+  //  @Column(nullable = false, length = 50)
     private String email;
 
     private String phoneNum;
